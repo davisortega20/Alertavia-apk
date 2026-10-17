@@ -1,6 +1,15 @@
 {
-"appId": "com.guarne.alertavia",
-"appName": "AlertaVia",
-!webDir": ".",
-"bundledWebRuntime": false
+  "appId": "com.alertavia.guarne.pro",
+  "appName": "AlertaVia PRO",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https",
+    "allowNavigation": [
+      "alertavia-cerebro-2tkh.onrender.com",
+      "api.open-meteo.com"
+    ]
+  },
+  "android": {
+    "backgroundColor": "#0A0F1E"
+  }
 }
