@@ -1,0 +1,6 @@
+{
+"appId": "com.guarne.alertavia",
+"appName": "AlertaVia",
+!webDir": ".",
+"bundledWebRuntime": false
+}
