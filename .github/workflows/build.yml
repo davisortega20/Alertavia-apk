@@ -19,21 +19,23 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android
-        uses: android-actions/setup-android@v3
-
-      - name: Prepare web
+      - name: Prepare Web
         run: |
           mkdir -p www
           cp index.html www/index.html
+          echo "Web preparada"
+          ls -lh www/
           npm install --force
 
-      - name: Build APK
+      - name: Create Android Project
         run: |
           rm -rf android
           npx cap add android
           npx cap copy android
-          cd android
+
+      - name: Build APK Debug
+        working-directory: android
+        run: |
           chmod +x gradlew
           ./gradlew assembleDebug
 
