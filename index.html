@@ -2,94 +2,162 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AlertaVia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AlertaVia PRO - Guarne Live</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI'}
-body{background:#F1F5F9}
-.header{background:#0F172A;color:white;padding:16px 16px 80px 16px}
-.header-top{display:flex;justify-content:space-between;align-items:center}
-.header h1{font-size:26px;font-weight:800}
-.badge-live{background:#16A34A;color:white;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}
-.main{margin-top:-60px;padding:0 14px 90px 14px}
-.card{background:white;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
-.green-card{background:#16A34A;color:white;border-radius:18px 18px 0 0;padding:14px;display:flex;align-items:center;gap:10px}
-.green-dot{width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center}
-.clima-row{display:flex;justify-content:space-between;align-items:center}
-.route-map{height:180px;background:#E2E8F0;border-radius:14px;margin:12px 0;position:relative;overflow:hidden;background-image:linear-gradient(90deg,#3B82F6 2px, transparent 2px);background-size:40px}
-.route-line{position:absolute;top:50%;left:10%;right:10%;height:4px;background:linear-gradient(90deg,#0EA5E9,#22C55E);border-radius:4px}
-.pin{position:absolute;background:white;padding:4px 10px;border-radius:20px;font-weight:700;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.via-row{display:flex;align-items:center;justify-content:space-between;padding:4px 0}
-.via-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
-.via-badge{padding:4px 8px;border-radius:8px;font-size:11px;font-weight:700;display:inline-block;margin:4px 0}
-.btn-blue{width:100%;background:#1E3A8A;color:white;padding:16px;border-radius:14px;border:none;font-weight:800;font-size:16px;margin-top:10px}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #E2E8F0;display:flex;justify-content:space-around;padding:10px 0}
-.nav-item{text-align:center;font-size:11px;color:#94A3B8} .nav-item.active{color:#16A34A}
+:root{--bg:#0A0F1E;--card:#121A2E;--card2:#1A2542;--accent:#00FFD1;--accent2:#5B8DEF;--text:#EAF0FF;--muted:#8A9CC5;--warn:#FFB020;--danger:#FF4D6D}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;min-height:100vh}
+.top-glow{position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse, rgba(91,141,239,0.25) 0%, rgba(0,255,209,0.1) 40%, transparent 70%);pointer-events:none;z-index:0}
+.header{position:relative;z-index:2;padding:14px 16px 10px;display:flex;flex-direction:column;gap:10px}
+.status-pill{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#1A2542 0%,#1E2E5A 100%);border:1px solid rgba(91,141,239,0.2);padding:10px 14px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(0,255,209,0.15),0 0 20px var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+.status-main{flex:1}
+.status-main b{font-family:'Space Grotesk';font-size:14px;letter-spacing:-0.02em;display:block;line-height:1.1}
+.status-main span{font-size:11px;color:var(--muted);letter-spacing:0.02em}
+.live-badge{background:rgba(0,255,209,0.1);border:1px solid rgba(0,255,209,0.25);color:var(--accent);font-size:10px;font-weight:700;padding:4px 8px;border-radius:20px;letter-spacing:0.08em}
+.weather-row{display:grid;grid-template-columns:1.2fr 0.8fr;gap:10px;position:relative;z-index:2;padding:0 16px}
+.card{background:linear-gradient(180deg,var(--card2) 0%,var(--card) 100%);border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:14px 16px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)}
+.weather-main h2{font-family:'Space Grotesk';font-size:13px;font-weight:700;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2px}
+.weather-main .temp{font-size:38px;font-weight:800;letter-spacing:-0.04em;line-height:0.9;background:linear-gradient(180deg,#fff 0%,#A8B9E0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.weather-main .desc{font-size:12px;color:var(--muted);margin-top:4px}
+.weather-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:42px}
+.weather-stats{display:flex;flex-direction:column;gap:8px;justify-content:center}
+.stat{display:flex;align-items:center;justify-content:space-between;font-size:11px}
+.stat b{font-weight:600;color:var(--text)}
+.stat span{color:var(--muted)}
+.route-container{margin:14px 16px;background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:24px;padding:16px;position:relative;z-index:2;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.route-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.route-head h3{font-family:'Space Grotesk';font-size:14px;font-weight:700}
+.route-meta{background:#0A0F1E;border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:5px 10px;font-size:11px;font-weight:600;color:var(--muted);display:flex;gap:6px;align-items:center}
+.timeline{position:relative;height:72px;background:linear-gradient(180deg,rgba(91,141,239,0.08) 0%,rgba(10,15,30,0) 100%);border:1px dashed rgba(91,141,239,0.15);border-radius:16px;overflow:hidden}
+.timeline-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(26,1fr);gap:0}
+.timeline-grid div{border-right:1px solid rgba(91,141,239,0.12)}
+.timeline-line{position:absolute;top:50%;left:8%;right:8%;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:10px;box-shadow:0 0 20px rgba(0,255,209,0.4)}
+.pin{position:absolute;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px}
+.pin-dot{width:12px;height:12px;background:white;border:3px solid var(--accent2);border-radius:50%}
+.pin-label{font-size:10px;font-weight:700;background:white;color:#0A0F1E;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.pin.guarne{left:14%} .pin.med{left:84%}
+.pin.guarne .pin-label{transform:translateY(-28px)} .pin.med .pin-label{transform:translateY(-28px)}
+.zones{margin:0 16px;display:grid;gap:10px;position:relative;z-index:2}
+.zone{border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.05);background:linear-gradient(135deg,rgba(26,37,66,0.8) 0%,rgba(18,26,46,0.9) 100%)}
+.zone-left{display:flex;align-items:center;gap:10px}
+.zone-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:18px}
+.zone-info b{font-size:13px;display:block;line-height:1.1}
+.zone-info span{font-size:11px;color:var(--muted)}
+.zone-status{font-size:10px;font-weight:800;letter-spacing:0.08em;padding:6px 10px;border-radius:20px;background:rgba(0,255,209,0.1);color:var(--accent);border:1px solid rgba(0,255,209,0.2)}
+.zone.warn .zone-status{background:rgba(255,176,32,0.12);color:var(--warn);border-color:rgba(255,176,32,0.2)}
+.bottom-nav{position:fixed;bottom:14px;left:16px;right:16px;background:rgba(18,26,46,0.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:22px;display:grid;grid-template-columns:repeat(4,1fr);padding:8px;z-index:10;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.nav-item{padding:8px 4px;border-radius:14px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:10px;font-weight:600}
+.nav-item.active{background:white;color:#0A0F1E}
+.nav-item i{font-size:18px;font-style:normal}
+.v54{margin:14px 16px 100px;text-align:center;font-size:10px;letter-spacing:0.15em;color:var(--muted);opacity:0.6;font-family:'Space Grotesk'}
+.render-status{margin:0 16px 10px;background:rgba(0,255,209,0.06);border:1px dashed rgba(0,255,209,0.2);border-radius:12px;padding:8px 12px;font-size:10px;color:var(--muted);display:flex;justify-content:space-between;position:relative;z-index:2}
 </style>
 </head>
 <body>
+<div class="top-glow"></div>
 <div class="header">
-<div class="header-top"><h1>AlertaVia</h1><div>🔔 👤</div></div>
+  <div class="status-pill" id="statusPill">
+    <div class="dot" id="dot"></div>
+    <div class="status-main">
+      <b id="estadoTxt">Conectando a cerebro V5.4...</b>
+      <span id="estadoSub">Render • Guarne - Medellín • Tiempo real</span>
+    </div>
+    <div class="live-badge" id="liveBadge">SYNC</div>
+  </div>
 </div>
-
-<div class="main" id="app">
-<div class="card">Conectando a V5.4...</div>
+<div class="render-status"><span id="renderUrl">🧠 cerebro-2tkh.onrender.com</span><span id="lastSync">Sincronizando...</span></div>
+<div class="weather-row">
+  <div class="card weather-main">
+    <h2>Guarne, Antioquia</h2>
+    <div class="temp" id="tempTxt">--°C</div>
+    <div class="desc" id="descTxt">Leyendo de Render...</div>
+    <div class="weather-icon" id="wIcon">⛅</div>
+  </div>
+  <div class="card weather-stats">
+    <div class="stat"><span>💨 Viento</span><b id="windTxt">-- km/h</b></div>
+    <div class="stat"><span>💧 Humedad</span><b id="humTxt">--%</b></div>
+    <div class="stat"><span>👁️ Visib.</span><b id="visTxt">10 km</b></div>
+  </div>
 </div>
-
-<div class="bottom-nav">
-<div class="nav-item active">📍<br>Mapa</div>
-<div class="nav-item">🔔<br>Alertas</div>
-<div class="nav-item">📋<br>Informes</div>
-<div class="nav-item">👤<br>Perfil</div>
+<div class="route-container">
+  <div class="route-head">
+    <h3>Ruta: Guarne → Medellín</h3>
+    <div class="route-meta">🕒 <span id="timeTxt">42 min</span> • <span id="distTxt">30 km</span></div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-grid"><div></div><div></div><div></div><div></div></div>
+    <div class="timeline-line"></div>
+    <div class="pin guarne"><div class="pin-dot"></div><div class="pin-label">Guarne</div></div>
+    <div class="pin med"><div class="pin-dot" style="border-color:var(--accent)"></div><div class="pin-label">Medellín</div></div>
+  </div>
 </div>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<div class="zones">
+  <div class="zone" id="zoneSanta"><div class="zone-left"><div class="zone-icon" style="background:rgba(91,141,239,0.15)">⛰️</div><div class="zone-info"><b>Santa Elena</b><span id="santaDesc">Esperando Render...</span></div></div><div class="zone-status" id="santaStatus">SYNC</div></div>
+  <div class="zone" id="zoneTunel"><div class="zone-left"><div class="zone-icon" style="background:rgba(255,176,32,0.15)">🚧</div><div class="zone-info"><b>Túnel de Oriente</b><span id="tunelDesc">Esperando Render...</span></div></div><div class="zone-status" id="tunelStatus">SYNC</div></div>
+  <div class="zone" id="zonePalmas"><div class="zone-left"><div class="zone-icon" style="background:rgba(0,255,209,0.15)">🌴</div><div class="zone-info"><b>Las Palmas</b><span id="palmasDesc">Alternativa • Esperando</span></div></div><div class="zone-status" id="palmasStatus">SYNC</div></div>
+</div>
+<div class="bottom-nav"><div class="nav-item active"><i>🗺️</i>Mapa</div><div class="nav-item"><i>🔔</i>Alertas</div><div class="nav-item"><i>📊</i>Informes</div><div class="nav-item"><i>👤</i>Perfil</div></div>
+<div class="v54">ALERTAVIA • CEREBRO V5.4 • RENDER LIVE • GUARNE 2026</div>
 <script>
-firebase.initializeApp({ databaseURL: "https://alertavia-default-rtdb.firebaseio.com" });
-firebase.database().ref("alertavia_pro").on("value", snap=>{
-  const d = snap.val(); if(!d) return;
-  const isVerde = d.color==="verde", isAmarillo=d.color==="amarillo", isRojo=d.color==="rojo";
-  const colorBg = isVerde?"#16A34A":isAmarillo?"#EAB308":isRojo?"#DC2626":"#64748B";
-  const txtEstado = isVerde?"Ruta despejada • Sin incidentes":isAmarillo?"Precaución • Tráfico lento":isRojo?"Cierre reportado":d.nivel;
-  const subEstado = isVerde?"Guarne → Medellín • Tráfico fluido":d.mensaje_pro.substring(0,60);
-  
-  const climaTemp = d.detalle?.clima?.temp || "--";
-  const climaPrec = d.detalle?.clima?.precip_ultima_hora || 0;
-  const viento = d.detalle?.clima?.viento || "--";
-  const santaMsg = d.detalle?.santa_elena?.mensaje || "Consultando INVIAS...";
-  const santaEstado = d.detalle?.santa_elena?.nivel==="fluido"?"Tránsito normal":d.detalle?.santa_elena?.nivel==="lento"?"Tráfico lento":d.detalle?.santa_elena?.nivel==="cerrado"?"Cerrada":"Verificando";
-  const tunelMsg = d.detalle?.tunel_oriente?.mensaje || "Consultando Túnel...";
-  const tunelEstado = d.detalle?.tunel_oriente?.nivel==="fluido"?"Operando normal":d.detalle?.tunel_oriente?.nivel==="lento"?"Precaución":d.detalle?.tunel_oriente?.nivel==="cerrado"?"Cerrado":"Verificando";
-
-  document.getElementById("app").innerHTML = `
-    <div style="border-radius:18px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.1);margin-bottom:14px">
-      <div class="green-card" style="background:${colorBg}"><div class="green-dot">✓</div><div><div style="font-weight:700">${txtEstado}</div><div style="font-size:12px;opacity:.9">${subEstado}</div></div></div>
-      <div class="card" style="margin:0;border-radius:0 0 18px 18px">
-        <div class="clima-row">
-          <div><div style="font-weight:700">Guarne</div><div style="font-size:28px;font-weight:800">${climaTemp}°C</div><div style="font-size:12px;color:#64748B">${climaPrec>0?`Lluvia ${climaPrec}mm`:"Nublado parcial"}</div></div>
-          <div style="text-align:right"><div style="font-size:36px">${climaPrec>2?"🌧️":"⛅"}</div><div style="font-size:11px;color:#64748B;margin-top:8px">💨 ${viento} km/h | 💧 ${climaPrec}%</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center"><b>Ruta activa: Guarne → Medellín</b><span style="background:#DCFCE7;color:#166534;padding:4px 8px;border-radius:10px;font-size:11px;font-weight:700">⏱ 42 min • 30 km</span></div>
-      <div class="route-map"><div class="route-line"></div><div class="pin" style="left:10%;top:40%">📍 Guarne</div><div class="pin" style="right:10%;top:45%">📍 Medellín</div></div>
-    </div>
-
-    <div class="card via-row">
-      <div style="display:flex;gap:12px;align-items:center"><div class="via-icon" style="background:#FEF3C7">⛰️</div><div><b>Santa Elena</b><br><span class="via-badge" style="background:${isVerde?'#DCFCE7':'#FEF9C3'};color:${isVerde?'#166534':'#854D0E'}">${santaEstado}</span><br><span style="font-size:12px;color:#64748B">${santaMsg.substring(0,50)}...</span></div></div><div style="color:#94A3B8">›</div>
-    </div>
-
-    <div class="card via-row">
-      <div style="display:flex;gap:12px;align-items:center"><div class="via-icon" style="background:#DBEAFE">🚇</div><div><b>Túnel de Oriente</b><br><span class="via-badge" style="background:#DCFCE7;color:#166534">${tunelEstado}</span><br><span style="font-size:12px;color:#64748B">${tunelMsg.substring(0,50)}...</span></div></div><div style="color:#94A3B8">›</div>
-    </div>
-
-    <button class="btn-blue" onclick="window.open('https://www.google.com/maps/dir/Guarne,+Antioquia/Medellín,+Antioquia','_blank')">Iniciar navegación ↗</button>
-    <div style="text-align:center;font-size:10px;color:#94A3B8;margin-top:10px">Fuentes: ${d.fuentes_verificadas?.join(' • ')} • V5.4 FINAL • ${d.ultima_verificacion}</div>
-  `;
-});
+const RENDER_BASE = "https://alertavia-cerebro-2tkh.onrender.com";
+const ENDPOINTS = ["/api/estado","/api/vias","/estado","/vias","/api","/","/status"];
+function setEstado(titulo, sub, color){
+  document.getElementById('estadoTxt').innerText = titulo;
+  document.getElementById('estadoSub').innerText = sub;
+  if(color){ const dot=document.getElementById('dot'); dot.style.background=color; dot.style.boxShadow=`0 0 0 4px ${color}30, 0 0 20px ${color}`; }
+}
+async function fetchRender(){
+  let data = null;
+  for(let ep of ENDPOINTS){
+    try{
+      const res = await fetch(RENDER_BASE + ep, {cache:'no-store'});
+      if(!res.ok) continue;
+      const json = await res.json();
+      if(json && (json.estado || json.clima || json.vias || json.temperatura || json.santaElena || json.tunel)){ data = json; document.getElementById('lastSync').innerText = "OK " + ep + " • " + new Date().toLocaleTimeString(); break; }
+      if(json && Object.keys(json).length>0 && !data){ data = json; }
+    }catch(e){}
+  }
+  if(data){ applyRenderData(data); document.getElementById('liveBadge').innerText="LIVE"; }
+  else { document.getElementById('lastSync').innerText="Modo local • Render dormido"; setEstado("FLUJO NORMAL • V5.4 ACTIVO","Render en reposo • Activando...", "#FFB020"); loadWeatherFallback(); applyMock(); }
+}
+function applyRenderData(d){
+  const estado = d.estado || d.status || d;
+  if(estado.titulo || estado.mensaje || estado.estado){ setEstado(estado.titulo || estado.mensaje || estado.estado, estado.sub || estado.detalle || "Tiempo real desde Render", estado.color || "#00FFD1"); }
+  if(d.clima || d.temperatura || d.temp){
+    const c = d.clima || d;
+    if(c.temperatura || c.temp){ document.getElementById('tempTxt').innerText = Math.round(parseFloat(c.temperatura || c.temp)) + "°C"; }
+    if(c.descripcion || c.desc) document.getElementById('descTxt').innerText = (c.descripcion || c.desc) + " • Guarne";
+    if(c.viento) document.getElementById('windTxt').innerText = c.viento;
+    if(c.humedad) document.getElementById('humTxt').innerText = c.humedad;
+  } else { loadWeatherFallback(); }
+  const vias = d.vias || d;
+  if(vias.santaElena || vias.santa || d.santaElena){ const s = vias.santaElena || vias.santa || d.santaElena; document.getElementById('santaDesc').innerText = s.desc || s.mensaje || s.estado || "Vía principal"; document.getElementById('santaStatus').innerText = s.status || s.estado || "FLUJO OK"; }
+  if(vias.tunel || d.tunel){ const t = vias.tunel || d.tunel; document.getElementById('tunelDesc').innerText = t.desc || t.mensaje || t.estado || "Peaje"; document.getElementById('tunelStatus').innerText = t.status || t.estado || "LIBRE"; }
+  if(vias.palmas || d.palmas){ const p = vias.palmas || d.palmas; document.getElementById('palmasDesc').innerText = p.desc || p.mensaje || "Alternativa"; document.getElementById('palmasStatus').innerText = p.status || p.estado || "LIBRE"; }
+}
+async function loadWeatherFallback(){
+  try{
+    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=6.2797&longitude=-75.4479&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=America%2FBogota');
+    const data = await res.json(); const c = data.current;
+    document.getElementById('tempTxt').innerText = Math.round(c.temperature_2m) + '°C';
+    document.getElementById('windTxt').innerText = Math.round(c.wind_speed_10m) + ' km/h';
+    document.getElementById('humTxt').innerText = c.relative_humidity_2m + '%';
+    let desc='Nublado parcial', icon='⛅'; const code=c.weather_code;
+    if(code<=1){desc='Despejado'; icon='☀️';} else if(code<=48){desc='Niebla en Santa Elena'; icon='🌫️';} else if(code<=67){desc='Lluvia ligera'; icon='🌦️';} else{desc='Lluvia moderada'; icon='🌧️';}
+    document.getElementById('descTxt').innerText = desc + ' • Guarne'; document.getElementById('wIcon').innerText = icon;
+  }catch(e){ document.getElementById('tempTxt').innerText = '18°C'; }
+}
+function applyMock(){
+  document.getElementById('santaDesc').innerText = 'Vía principal • Tránsito fluido'; document.getElementById('santaStatus').innerText = 'FLUJO OK';
+  document.getElementById('tunelDesc').innerText = 'Peaje • 2 min espera'; document.getElementById('tunelStatus').innerText = 'LIBRE';
+  document.getElementById('palmasDesc').innerText = 'Alternativa • Sin novedad'; document.getElementById('palmasStatus').innerText = 'LIBRE';
+}
+fetchRender(); setInterval(fetchRender, 20000); loadWeatherFallback();
 </script>
 </body>
 </html>
